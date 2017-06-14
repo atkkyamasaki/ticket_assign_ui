@@ -264,7 +264,8 @@ $(function () {
 // テスト結果の表示
 $(function () {
 
-  var notPassedTotal = parseInt($('#percent_failed').text(), 10) + parseInt($('#percent_pending').text(), 10) + parseInt($('#percent_skipped').text(), 10);
+  var notPassedTotal = parseInt($('#total_failed').text(), 10) + parseInt($('#total_pending').text(), 10) + parseInt($('#total_skipped').text(), 10);
+  console.log(notPassedTotal);
 
   if (notPassedTotal > 0) {
     $('.border-block').css('background-color', 'red');
