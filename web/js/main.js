@@ -144,6 +144,50 @@ $(function () {
 // http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/column-negative/
 $(function () {
 
+  // var featurePassed = [parseInt($('#feature_' + i + ' > .summary_step_passed').text(), 10)];
+  // var featureFailed = [parseInt($('#feature_' + i + ' > .summary_step_failed').text(), 10)];
+  // var featurePending = [parseInt($('#feature_' + i + ' > .summary_step_pending').text(), 10)];
+  // var featureSkipped = [parseInt($('#feature_' + i + ' > .summary_step_skipped').text(), 10)];
+  var totalPassed = [parseInt($('#total_passed').text(), 10)];
+  var totalFailed = [parseInt($('#total_failed').text(), 10)];
+  var totalPending = [parseInt($('#total_pending').text(), 10)];
+  var totalSkipped = [parseInt($('#total_skipped').text(), 10)];
+
+  Highcharts.chart('container_summary_total', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Feature Summary'
+      },
+      xAxis: {
+          categories: ['Summary']
+      },
+      credits: {
+          enabled: false
+      },
+      series: [{
+          name: 'Passed',
+          color: 'green',
+          data: totalPassed
+      }, {
+          name: 'Failed',
+          color: 'red',
+          data: totalFailed
+      }, {
+          name: 'Pending',
+          color: 'orange',
+          data: totalPending
+      }, {
+          name: 'Skipped',
+          color: 'skyblue',
+          data: totalSkipped
+      }]
+  });
+});
+
+$(function () {
+
   for (var i = (parseInt($('#total_features').text())) - 1; i >= 0; i--) {
     var container_id = 'container_feature' + i + '_summary';
     var featurePassed = [parseInt($('#feature_' + i + ' > .summary_step_passed').text(), 10)];
@@ -169,7 +213,7 @@ $(function () {
             color: 'green',
             data: featurePassed
         }, {
-            name: 'faied',
+            name: 'Failed',
             color: 'red',
             data: featureFailed
         }, {
