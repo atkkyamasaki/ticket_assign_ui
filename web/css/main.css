@@ -171,6 +171,21 @@ li,ul {
     background-color: gainsboro;
     padding: 8px;
     box-shadow: 6px 6px rgba(0,0,0,0.4);
+    -moz-transition: -moz-transform 0.3s linear;
+    -webkit-transition: -webkit-transform 0.3s linear;
+    -o-transition: -o-transform 0.3s linear;
+    -ms-transition: -ms-transform 0.3s linear;
+    transition: transform 0.3s linear;
+    position: relative;
+    z-index: 100;
+}
+
+.imag_screenshot:hover {
+    -webkit-transform: scale(4);
+    -moz-transform: scale(4);
+    -o-transform: scale(4);
+    -ms-transform: scale(4);
+    transform: scale(4);
 }
 
 .hide {

@@ -309,7 +309,6 @@ $(function () {
 $(function () {
 
   var notPassedTotal = parseInt($('#total_failed').text(), 10) + parseInt($('#total_pending').text(), 10) + parseInt($('#total_skipped').text(), 10);
-  console.log(notPassedTotal);
 
   if (notPassedTotal > 0) {
     $('.border-block').css('background-color', 'red');
@@ -342,6 +341,15 @@ $(function () {
     }
   }
 
+});
+
+// ScreenShot の拡大
+$(function() {
+  $('.imag_screenshot').hover(function() {
+    $(this).css('z-index', '1000');
+  }, function() {
+    $(this).css('z-index', '100');
+  });
 });
 
 

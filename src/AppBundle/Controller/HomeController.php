@@ -146,7 +146,7 @@ class HomeController extends Controller
 
     private function getDirImages($productName, $version)
     {
-        $filePath = '../src/AppBundle/Resources/config/' . $productName . '/' . $version . '/image';
+        $filePath = '../web/image/' . $productName . '/' . $version;
 
         $images = [];
         $files = scandir($filePath);
