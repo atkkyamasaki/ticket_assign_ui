@@ -7,6 +7,6 @@
 /src/AppBundle/Resources/config/vista_manager/122/*
 !/src/AppBundle/Resources/config/vista_manager/122/.gitkeep
 /web/image/vista_manager/*
-/web/image/vista_manager/.gitkeep
+!/web/image/vista_manager/.gitkeep
 /web/image/vista_manager/122/*
-/web/image/vista_manager/122/.gitkeep
+!/web/image/vista_manager/122/.gitkeep
