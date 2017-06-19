@@ -12,13 +12,13 @@
         '/vendor/jquery/jquery.cookie.js',
         '/vendor/tether/tether.min.js',
         '/vendor/angular/angular.min.js',
+        '/vendor/angular/angular.min.js.map',
         '/vendor/bootstrap/js/bootstrap.min.js',
         '/vendor/highcharts/highcharts.js',
         '/vendor/highcharts/highcharts-3d.js',
         '/vendor/highcharts/exporting.js',
         '/vendor/highcharts/data.js',
         '/vendor/highcharts/drilldown.js',
-
         '/js/main.js'
     ];
 
