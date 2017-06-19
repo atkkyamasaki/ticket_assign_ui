@@ -1,11 +1,11 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% block title %}Vista Manager - {{ parent() }}{% endblock %}
+{% block title %}{{ product }} - {{ parent() }}{% endblock %}
 
 {% block body %}
 
 <div class="border-block">
-    <p class="title">Vista Manager - WebUI Auto Test Repoter</p>
+    <p class="title">{{ product }} ({{ version }}) - WebUI Auto Test Repoter</p>
 </div>
 
 <div class="background-block_float">
@@ -71,7 +71,7 @@
                     {% if steps.name == 'I take screenshot' %}
                     {% if steps.result.status == 'passed' or steps.result.status == 'failed' %}
                     <li>
-                        <a href="/image/vista_manager/122/{{ cycle(images, i) }}"><img class="imag_screenshot" src="/image/vista_manager/122/{{ cycle(images, i) }}" width="300" alt="screenshot"></a>
+                        <a href="/image/{{ product }}/{{ version }}/{{ cycle(images, i) }}"><img class="imag_screenshot" src="/image/{{ product }}/{{ version }}/{{ cycle(images, i) }}" width="300" alt="screenshot"></a>
                     </li>
                     {% set i = i + 1 %}
                     {% endif %}
