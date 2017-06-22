@@ -4,7 +4,9 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use ZipArchive;
 
 /**
  * @Route("/{product}")
@@ -13,6 +15,7 @@ class ReportController extends Controller
 {
     /**
      * @Route("/{version}")
+     * @Method({"GET"})
      */
     public function reportAction($product, $version)
     {
@@ -32,6 +35,77 @@ class ReportController extends Controller
             'senario_summary_total' => $senarioSummary,
             'images' => $images,
         ]);
+    }
+
+    /**
+     * @Route("/{version}/download")
+     * @Method({"POST"})
+     */
+    public function downloadAction($product, $version)
+    {
+        $fileResult = '../src/AppBundle/Resources/config/' . $product . '/' . $version . '/result.json';
+        $filePath = '../web/image/' . $product . '/' . $version . '/';
+        $images = $this->getDirImages($product, $version);
+        $tmpZipFile = '../web/image/tmp/result.zip';
+
+        unlink($tmpZipFile);
+        $zip = new ZipArchive();
+        $res = $zip->open($tmpZipFile, ZipArchive::CREATE);
+         
+        if ($res === true) {
+         
+            $zip->addFile($fileResult, 'result.json');
+            $i = 0;
+            foreach ($images as $value) {
+                $zip->addFile($filePath . $value, 'screenshot' . $i . '.png');
+                $i++;
+            }
+            $zip->close();
+        }
+        return $this->render('AppBundle:Home:index.html.twig');
+    }
+
+    /**
+     * @Route("/{version}/upload")
+     * @Method({"POST"})
+     */
+    public function uploadAction($product, $version)
+    {
+        if($_FILES["file"]["tmp_name"]){
+            $postFile = "../web/image/tmp/post/result.zip";
+            if($postFile) {
+                unlink($postFile);
+            }
+            move_uploaded_file($_FILES['file']['tmp_name'], $postFile);
+        }
+
+        $zip = new ZipArchive();
+         
+        // ZIPファイルをオープン
+        $res = $zip->open($postFile);
+         
+        // zipファイルのオープンに成功した場合
+        if ($res === true) {
+         
+            // 圧縮ファイル内の全てのファイルを指定した解凍先に展開する
+            $zip->extractTo('../web/image/tmp/unzip/');
+         
+            // ZIPファイルをクローズ
+            $zip->close();
+        }
+
+        rename('../web/image/tmp/unzip/result.json', '../src/AppBundle/Resources/config/' . $product . '/' . $version . '/result.json');
+
+        foreach(glob('../web/image/tmp/unzip/*.png', GLOB_BRACE) as $file){
+            if(is_file($file)){
+                // echo htmlspecialchars($file);
+                // error_log('debug = ' . print_r(htmlspecialchars($file), true) . "\n", 3, 'C:\Users\Administrator\Desktop\debug.txt');
+                $screenShotName = str_replace('../web/image/tmp/unzip/', '', $file);
+                rename('../web/image/tmp/unzip/' . $screenShotName, '../web/image/' . $product . '/' . $version . '/' . $screenShotName);
+            }
+        }
+
+        return $this->render('AppBundle:Home:index.html.twig');
     }
 
     private function getSummary($data)

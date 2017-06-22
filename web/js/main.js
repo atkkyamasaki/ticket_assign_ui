@@ -383,11 +383,50 @@ $(function() {
 });
 
 
+// ZIP File ダウンロード用
 
+$(function () {
+  $('#zip_download_btn').on('click', function (event) {
+    var product = $('#hide_product').text();
+    var version = $('#hide_version').text();
 
+    $.ajax({
+      type: 'post',
+      url: '/' + product + '/' + version + '/download',
+      success: function (data, status, xhr) {
+      },
+      complete: function () {
+        location.href = '/image/tmp/result.zip';
+      }
+    });
+  });
+});
 
+// ZIP File アップロード用
 
+$(document).on('change','input[name="zip_upload_btn"]',function(){
+  var product = $('#hide_product').text();
+  var version = $('#hide_version').text();
 
-
-
+  var fd = new FormData();
+  if ($("input[name='zip_upload_btn']").val()!== '') {
+    fd.append( "file", $("input[name='zip_upload_btn']").prop("files")[0] );
+  }
+  fd.append("dir",$("#zip_upload_btn").val());
+  var postData = {
+    type : "POST",
+    dataType : "text",
+    data : fd,
+    processData : false,
+    contentType : false
+  };
+  $.ajax(
+    '/' + product + '/' + version + '/upload', postData
+  ).done(function(data){
+    $('#test_upload').prop("disabled", false).css({
+      'background-color': '#31c8aa',
+      'box-shadow': '2px 2px #23a188',
+    });
+  });
+});
 

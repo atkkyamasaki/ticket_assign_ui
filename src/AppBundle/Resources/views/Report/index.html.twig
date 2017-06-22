@@ -22,11 +22,20 @@
 {% set j = 0 %}
 {% set k = 0 %}
 <div class="border-block_float">
-
-<div>
-    <span class='all_expand button'>Expand All</span><span class='all_collapse button'>Collapse All</span>
-</div>
-
+    <div>
+        {% if product == 'test' %}
+        <form action="/{{ product }}/{{version}}" method="get">
+            <input type="file" name="zip_upload_btn">
+            <input id="test_upload" type="submit" name="upload" value="Upload" disabled="disabled">
+        </form>
+        <input id="zip_upload_btn" type="hidden" value="zip_upload_btn">
+        {% else %}
+        <span id="zip_download_btn" class="button">Summary Download</span>
+        {% endif %}
+    </div>
+    <div>
+        <span class="all_expand button">Expand All</span><span class="all_collapse button">Collapse All</span>
+    </div>
 <ul>
     {% for features in result_data %}
     <div class="border-feature">
@@ -94,6 +103,8 @@
 
 
 <div class="hide">
+<p id='hide_product'>{{ product }}</p>
+<p id='hide_version'>{{ version }}</p>
 <p id='total_features'>{{ count_total.total_features }}</p>
 <p id='total_senarios'>{{ count_total.total_senarios }}</p>
 <p id='total_steps'>{{ count_total.total_steps }}</p>
