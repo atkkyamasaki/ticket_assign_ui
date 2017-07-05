@@ -57,7 +57,7 @@ class ReportController extends Controller
             $zip->addFile($fileResult, 'result.json');
             $i = 0;
             foreach ($images as $value) {
-                $zip->addFile($filePath . $value, 'screenshot' . $i . '.png');
+                $zip->addFile($filePath . $value, 'screenshot' . str_pad($i, 4, 0, STR_PAD_LEFT) . '.png');
                 $i++;
             }
             $zip->close();
