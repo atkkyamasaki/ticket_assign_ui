@@ -19,6 +19,12 @@ class ReportController extends Controller
      */
     public function reportAction($product, $version)
     {
+        if (!file_exists('../src/AppBundle/Resources/config/' . $product . '/' . $version . '/result.json')) {
+            return $this->render('AppBundle:Error:index.html.twig', [
+            'error' => 'There ara no result.json file in this product directory.',
+            ]);
+        }
+
         $data = $this->getCucumberJson($product, $version);
         $images = $this->getDirImages($product, $version);
         $resultSummary = $this->getSummary($data);
