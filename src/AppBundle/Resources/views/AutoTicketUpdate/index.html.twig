@@ -30,9 +30,8 @@
                 </tr>
             </thead>
             <tbody>
-                {% set i = 0 %}
                 {% for cases in pool0 %}
-                <tr id="person_tr_{{ i }}">
+                <tr>
                     <td class="hide">{{ cases.id }}</td>
                     <td class="case_id">{{ cases.caseId }}</td>
                     <td>{{ cases.title }}</td>
@@ -63,7 +62,6 @@
                     <td class="hide">{{ cases.mvComp }}</td>
                     <td class="hide">{{ cases.qGroup }}</td>
                 </tr>
-                {% set i = i + 1 %}
                 {% endfor %}
             </tbody>
         </table>
@@ -93,6 +91,7 @@
                 </tr>
             </thead>
             <tbody>
+                {% set i = 0 %}
                 {% for tac in assignee %}
                 <tr>
                     <td class="hide">{{ tac.id }}</td>
@@ -102,17 +101,18 @@
                         {% elseif tac.pto == 1 %}
                         <span class="attend_icon_red">●</span>
                         {% endif %}
-                        <span class="table_tac_name">{{ tac.name }}</span>
+                        <span class="table_tac_name_{{ i }}">{{ tac.name }}</span>
                         {% if tac.da == 1 %}
                         <span class="fa fa-ban" style="color: red;"></span>
                         {% endif %}
                     </td>
-                    <td>{{ tac.laps }}</td>
-                    <td>{{ tac.point }}</td>
-                    <td>{{ tac.highPri }}</td>
+                    <td class="table_tac_laps_{{ i }}">{{ tac.laps }}</td>
+                    <td class="table_tac_point_{{ i }}">{{ tac.point }}</td>
+                    <td class="table_tac_highpri_{{ i }}">{{ tac.highPri }}</td>
                     <td class="hide">{{ tac.pto }}</td>
                     <td class="hide">{{ tac.da }}</td>
                 </tr>
+                {% set i = i + 1 %}
                 {% endfor %}
             </tbody>
         </table>
@@ -126,10 +126,10 @@
 <div class="background-block_float">
     <div id="container_summary_total" style="min-width: 400px; max-width: 600px; height: 300px; margin: 0 auto"></div>
 </div>
-<div class="background-block_float">
-    <div id="highchart_summary_tac" style="min-width: 400px; max-width: 600px; height: 300px; margin: 0 auto"></div>
-</div>
 -->
+<div class="background-block_float">
+    <div id="highchart_summary_tac"></div>
+</div>
 
 
 <p id="page-top"><a href="#wrap">PAGE TOP</a></p>

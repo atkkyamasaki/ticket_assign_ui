@@ -65,23 +65,18 @@ $(function () {
 // http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/column-negative/
 
 $(function () {
-  // var featurePassed = [parseInt($('#feature_' + i + ' > .summary_step_passed').text(), 10)];
-  // var featureFailed = [parseInt($('#feature_' + i + ' > .summary_step_failed').text(), 10)];
-  // var featurePending = [parseInt($('#feature_' + i + ' > .summary_step_pending').text(), 10)];
-  // var featureSkipped = [parseInt($('#feature_' + i + ' > .summary_step_skipped').text(), 10)];
-  // var totalPassed = [parseInt($('#total_passed').text(), 10)];
-  // var totalFailed = [parseInt($('#total_failed').text(), 10)];
-  // var totalPending = [parseInt($('#total_pending').text(), 10)];
-  // var totalSkipped = [parseInt($('#total_skipped').text(), 10)];
-
-  // var allTacStatus = $('.table_tac_name').text().split(" ");
+  var allTacName = [];
+  var allTacLaps = [];
+  var allTacPoint = [];
+  var allTacHighPri  = [];
 
   var table = $('#table_person tbody');
-
   for(var i = 0, l = table.children().length; i < l; i++) {
-    console.log(table.children('tr .table_tac_name').eq(i).text());
+    allTacName.push($('.table_tac_name_' + i).text());
+    allTacLaps.push(parseInt($('.table_tac_laps_' + i).text()));
+    allTacPoint.push(parseInt($('.table_tac_point_' + i).text()));
+    allTacHighPri.push(parseInt($('.table_tac_highpri_' + i).text()));
   }
-
 
   Highcharts.chart('highchart_summary_tac', {
       chart: {
@@ -91,7 +86,7 @@ $(function () {
           text: 'Feature Summary'
       },
       xAxis: {
-          categories: [allTac]
+          categories: allTacName
       },
       credits: {
           enabled: false
@@ -99,21 +94,48 @@ $(function () {
       series: [{
           name: '負荷状況',
           color: 'green',
-          data: totalPassed
+          data: allTacPoint
       }, {
           name: 'High Priority Case数',
           color: 'red',
-          data: totalFailed
+          data: allTacHighPri
       }, {
           name: '本日の対応件数',
-          color: 'orange',
-          data: totalPending
+          color: 'blue',
+          data: allTacLaps
       }]
   });
 });
 
 
-
+// ページトップへ戻るボタン用
+$(function() {
+  var showFlag = false;
+  var topBtn = $('#page-top');    
+  topBtn.css('bottom', '-100px');
+  var showFlag = false;
+  //スクロールが100に達したらボタン表示
+  $(window).scroll(function () {
+    if ($(this).scrollTop() > 100) {
+      if (showFlag == false) {
+        showFlag = true;
+        topBtn.stop().animate({'bottom' : '20px'}, 200); 
+      }
+    } else {
+      if (showFlag) {
+        showFlag = false;
+        topBtn.stop().animate({'bottom' : '-100px'}, 200); 
+      }
+    }
+  });
+  //スクロールしてトップ
+  topBtn.click(function () {
+    $('body,html').animate({
+      scrollTop: 0
+    }, 500);
+    return false;
+  });
+});
 
 
 
@@ -480,34 +502,7 @@ $(function () {
 // });
 
 
-// ページトップへ戻るボタン用
-$(function() {
-  var showFlag = false;
-  var topBtn = $('#page-top');    
-  topBtn.css('bottom', '-100px');
-  var showFlag = false;
-  //スクロールが100に達したらボタン表示
-  $(window).scroll(function () {
-    if ($(this).scrollTop() > 100) {
-      if (showFlag == false) {
-        showFlag = true;
-        topBtn.stop().animate({'bottom' : '20px'}, 200); 
-      }
-    } else {
-      if (showFlag) {
-        showFlag = false;
-        topBtn.stop().animate({'bottom' : '-100px'}, 200); 
-      }
-    }
-  });
-  //スクロールしてトップ
-  topBtn.click(function () {
-    $('body,html').animate({
-      scrollTop: 0
-    }, 500);
-    return false;
-  });
-});
+
 
 
 // // ZIP File ダウンロード用

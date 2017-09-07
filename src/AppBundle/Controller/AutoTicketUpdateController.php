@@ -47,8 +47,8 @@ class AutoTicketUpdateController extends Controller
      */
     public function nextAssignAction()
     {
-        $command = 'test';
-        return new JsonResponse(array('name' => $command));
+        exec('echo 1', $out);
+        return new JsonResponse(array('name' => $out));
     }
 
     /**
