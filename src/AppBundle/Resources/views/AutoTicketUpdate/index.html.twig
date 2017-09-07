@@ -1,0 +1,139 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block title %}Auto Ticket Update - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+<div class="container_title">
+    <h1>Auto Ticket Update Tool</h>
+</div>
+
+<div class="container_ticket">
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <caption style="caption-side: top">Case Status</caption>
+            <thead>
+                <tr class="bg-primary" style="color: white;">
+                    <th class="hide">ID</th>
+                    <th>Case ID</th>
+                    <th>Title</th>
+                    <th>Priority</th>
+                    <th>Country</th>
+                    <th>Queue</th>
+                    <th>TAC</th>
+                    <th>Model</th>
+                    <th>Company</th>
+                    <th class="hide">Assignee</th>
+                    <th style="min-width: 200px;">Name</th>
+                    <th class="hide">mv_comp</th>
+                    <th class="hide">q_group</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set i = 0 %}
+                {% for cases in pool0 %}
+                <tr id="person_tr_{{ i }}">
+                    <td class="hide">{{ cases.id }}</td>
+                    <td class="case_id">{{ cases.caseId }}</td>
+                    <td>{{ cases.title }}</td>
+                    <td>{{ cases.priority }}</td>
+                    <td>{{ cases.country }}</td>
+                    <td>{{ cases.queue }}</td>
+                    <td>{{ cases.tac }}</td>
+                    <td>{{ cases.model }}</td>
+                    <td>{{ cases.company }}</td>
+                    <td class="hide">{{ cases.assignee }}</td>
+                    {% if cases.name %}
+                    <td>{{ cases.name }}</td>
+                    {% else %}
+                    <td>
+                        <span class="not_assign_icon">Not Assign</span>
+                        <div class="hide">
+                        <form>
+                            <select id="manual_assign" name="manual_assign">
+                                <option selected disabled>担当者を選択</option>
+                                {% for name in assignee %}
+                                <option value="{{ name.id }}">{{ name.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                        </div>
+                    </td>
+                    {% endif %}
+                    <td class="hide">{{ cases.mvComp }}</td>
+                    <td class="hide">{{ cases.qGroup }}</td>
+                </tr>
+                {% set i = i + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="container_script">
+<button type="button" id="auto_assign" class="btn btn-primary">Auto Assign</button>
+<button type="submit" id="next_assign" class="btn btn-primary">Next Assigner Check</button><span id="next_assign_tac"></span>
+
+</div>
+
+<div class="container_person">
+    <div class="table-responsive">
+        <table id="table_person" class="table table-hover table-bordered">
+            <caption style="caption-side: top;">TAC Status</caption>
+            <thead>
+                <tr class="bg-primary" style="color: white;">
+                    <th class="hide">ID</th>
+                    <th>名前</th>
+                    <th>本日の対応件数</th>
+                    <th>負荷状況</th>
+                    <th>High Priority Case数</th>
+                    <th class="hide">出勤状況</th>
+                    <th class="hide">対応不可フラグ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tac in assignee %}
+                <tr>
+                    <td class="hide">{{ tac.id }}</td>
+                    <td>
+                        {% if tac.pto == 0 %}
+                        <span class="attend_icon_green">●</span>
+                        {% elseif tac.pto == 1 %}
+                        <span class="attend_icon_red">●</span>
+                        {% endif %}
+                        <span class="table_tac_name">{{ tac.name }}</span>
+                        {% if tac.da == 1 %}
+                        <span class="fa fa-ban" style="color: red;"></span>
+                        {% endif %}
+                    </td>
+                    <td>{{ tac.laps }}</td>
+                    <td>{{ tac.point }}</td>
+                    <td>{{ tac.highPri }}</td>
+                    <td class="hide">{{ tac.pto }}</td>
+                    <td class="hide">{{ tac.da }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 
+<div class="background-block_float">
+    <div id="container_summary_case" style="min-width: 400px; max-width: 600px; height: 300px; margin: 0 auto"></div>
+</div>
+<div class="background-block_float">
+    <div id="container_summary_total" style="min-width: 400px; max-width: 600px; height: 300px; margin: 0 auto"></div>
+</div>
+<div class="background-block_float">
+    <div id="highchart_summary_tac" style="min-width: 400px; max-width: 600px; height: 300px; margin: 0 auto"></div>
+</div>
+-->
+
+
+<p id="page-top"><a href="#wrap">PAGE TOP</a></p>
+
+
+
+{% endblock %}
