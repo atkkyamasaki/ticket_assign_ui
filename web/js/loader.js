@@ -9,7 +9,7 @@
 
     var jsFiles = [
         '/vendor/jquery/jquery-3.1.1.min.js',
-        '/vendor/jquery/jquery.cookie.js',
+        // '/vendor/jquery/jquery.cookie.js',
         '/vendor/tether/tether.min.js',
         // '/vendor/angular/angular.min.js',
         // '/vendor/angular/angular.min.js.map',
