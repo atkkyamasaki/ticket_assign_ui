@@ -47,19 +47,7 @@ class AutoTicketUpdateController extends Controller
      */
     public function nextAssignAction()
     {
-        // exec('PoolMonitor.sh', $output);
-
-        $output = [
-            "2017/09/08 09:10:27 Checking ...",
-            "Usage : java -jar ... [-a] [-u]",
-            "-a : Auto assign all registered ticket in the pool",
-            "-u : Update assignee name and que group in the pool",
-            "-f <case_id> <id of assignee> : Update assignee name and que group in the pool",
-            "",
-            "Next assginee            : id = 7, name = Tsuyoshi Tanaka, laps = 0, point = 14, high_pri = 1",
-            "Next assginee (high_pri) : id = 6, name = Yoshiyuki Hamabe, laps = 0, point = 15, high_pri = 0",
-            "# of unassigned tickets = 10",
-        ];
+        exec('PoolMonitor.sh', $output);
 
         foreach ($output as $value) {
             if (strpos($value,'Next assginee            :') !== false) {
@@ -77,8 +65,7 @@ class AutoTicketUpdateController extends Controller
             'next_assign' => $nextAssgin,
             'next_high_assign' => $nextHighAssgin,
             'unassign_num' => $unassignNum,
-            ]
-        );
+        ]);
     }
 
     /**
@@ -87,8 +74,12 @@ class AutoTicketUpdateController extends Controller
      */
     public function autoAssignAction()
     {
-        $command = 'test';
-        return new JsonResponse(array('name' => $command));
+        $cmd = 'PoolMonitor.sh -a';
+        // exec($cmd, $output);
+
+        return new JsonResponse([
+            'status' => 'successful',
+        ]);
     }
 
     /**
@@ -97,6 +88,8 @@ class AutoTicketUpdateController extends Controller
      */
     public function manualAssignAction($caseId, $userId)
     {
+        $cmd = 'PoolMonitor.sh -f ' + $caseId + ' ' + $userId;
+        // exec($cmd, $output);
         
         return new JsonResponse(array('case' => $caseId, 'user' => $userId, ));
     }

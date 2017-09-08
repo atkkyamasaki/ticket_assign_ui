@@ -43,20 +43,31 @@
                     <td>{{ cases.company }}</td>
                     <td class="hide">{{ cases.assignee }}</td>
                     {% if cases.name %}
-                    <td>{{ cases.name }}</td>
+                    <td>{{ cases.name }}
+                        <span class="change_assign_icon">Change</span>
+                        <div class="hide">
+                            <form>
+                                <select class="manual_assign" name="manual_assign">
+                                    <option selected disabled>担当者を選択</option>
+                                    {% for name in assignee %}
+                                    <option value="{{ name.id }}">{{ name.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </div>
+                    </td>
                     {% else %}
                     <td>
                         <span class="not_assign_icon">Not Assign</span>
                         <div class="hide">
-                        <form>
-                            <select id="manual_assign" name="manual_assign">
-                                <option selected disabled>担当者を選択</option>
-                                {% for name in assignee %}
-                                <option value="{{ name.id }}">{{ name.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </form>
-                        <button type="submit" id="manual_assign_btn" class="btn btn-primary" disabled>Submit</button>
+                            <form>
+                                <select class="manual_assign" name="manual_assign">
+                                    <option selected disabled>担当者を選択</option>
+                                    {% for name in assignee %}
+                                    <option value="{{ name.id }}">{{ name.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
                         </div>
                     </td>
                     {% endif %}
@@ -122,7 +133,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% set i = 0 %}
+                {% set i = 1 %}
                 {% for tac in assignee %}
                 <tr>
                     <td class="hide">{{ tac.id }}</td>

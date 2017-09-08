@@ -8,7 +8,7 @@ $(function () {
       type: 'get',
       url: '/auto_ticket/next_assign',
       success: function (data, status, xhr) {
-        console.log(data);
+
         $('#next_assign_name').text(data['next_assign']);
         $('#next_high_assign_name').text(data['next_high_assign']);
         $('#next_assign_unassign_num').text(data['unassign_num']);
@@ -29,15 +29,22 @@ $(function () {
 $(function () {
   $('#auto_assign').on('click', function (event) {
 
-    $.ajax({
-      type: 'put',
-      url: '/auto_ticket/auto_assign',
-      success: function (data, status, xhr) {
-        console.log(data);
-      },
-      complete: function () {
-      }
-    });
+    if(!confirm('自動割り当てを実行しますか？')){
+      /* キャンセルの時の処理 */
+      return false;
+    }else{
+      /* OKの時の処理 */
+      $('.all_loading').removeClass('hide');
+      $.ajax({
+        type: 'put',
+        url: '/auto_ticket/auto_assign',
+        success: function (data, status, xhr) {
+        },
+        complete: function () {
+          window.location.href = '/auto_ticket/view';
+        }
+      });
+    }
   });
 });
 
@@ -50,23 +57,36 @@ $(function () {
     $(this).next('div').removeClass('hide');
   });
 
-  $('select#manual_assign').change(function () {
+  $('.change_assign_icon').on('click', function (event) {
+    $(this).addClass('hide');
+    $(this).next('div').removeClass('hide');
+  });
+
+  $('select.manual_assign').change(function () {
+
     var caseId = $(this).parents('tr').children('.case_id').text();
     var userId = $(this).val();
-    $(this).children('#manual_assign_btn').prop('disabled', false);
+    var tacNameClassValue = '.table_tac_name_' + userId;
 
+    if(!confirm($(tacNameClassValue).text() + 'へチケット(CaseID:' + caseId + ')の割り当てを実行しますか？')){
+      /* キャンセルの時の処理 */
+      return false;
+    }else{
+      /* OKの時の処理 */
+      $('.all_loading').removeClass('hide');
 
-
-    $.ajax({
-      type: 'put',
-      url: '/auto_ticket/manual_assign/' +  caseId + '/' + userId,
-      success: function (data, status, xhr) {
-        console.log(data);
-      },
-      complete: function () {
-      }
-    });
-
+      $.ajax({
+        type: 'put',
+        url: '/auto_ticket/manual_assign/' +  caseId + '/' + userId,
+        success: function (data, status, xhr) {
+          console.log(data);
+        },
+        complete: function () {
+          window.location.href = '/auto_ticket/view';
+          // $('.all_loading').addClass('hide');
+        }
+      });
+    }
   });
 });
 
@@ -83,7 +103,7 @@ $(function () {
   var allTacHighPri  = [];
 
   var table = $('#table_person tbody');
-  for(var i = 0, l = table.children().length; i < l; i++) {
+  for(var i = 1, l = table.children().length + 1; i < l; i++) {
     allTacName.push($('.table_tac_name_' + i).text());
     allTacLaps.push(parseInt($('.table_tac_laps_' + i).text()));
     allTacPoint.push(parseInt($('.table_tac_point_' + i).text()));
@@ -121,6 +141,7 @@ $(function () {
 
 
 // ページトップへ戻るボタン用
+
 $(function() {
   var showFlag = false;
   var topBtn = $('#page-top');    
