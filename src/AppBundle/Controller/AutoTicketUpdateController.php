@@ -47,8 +47,38 @@ class AutoTicketUpdateController extends Controller
      */
     public function nextAssignAction()
     {
-        exec('echo 1', $out);
-        return new JsonResponse(array('name' => $out));
+        // exec('PoolMonitor.sh', $output);
+
+        $output = [
+            "2017/09/08 09:10:27 Checking ...",
+            "Usage : java -jar ... [-a] [-u]",
+            "-a : Auto assign all registered ticket in the pool",
+            "-u : Update assignee name and que group in the pool",
+            "-f <case_id> <id of assignee> : Update assignee name and que group in the pool",
+            "",
+            "Next assginee            : id = 7, name = Tsuyoshi Tanaka, laps = 0, point = 14, high_pri = 1",
+            "Next assginee (high_pri) : id = 6, name = Yoshiyuki Hamabe, laps = 0, point = 15, high_pri = 0",
+            "# of unassigned tickets = 10",
+        ];
+
+        foreach ($output as $value) {
+            if (strpos($value,'Next assginee            :') !== false) {
+                $nextAssginInfo = explode(',', $value);
+                $nextAssgin = str_replace(' name = ', '', $nextAssginInfo[1]);
+            } elseif (strpos($value,'Next assginee (high_pri) :') !== false) {
+                $nextHighAssginInfo = explode(',', $value);
+                $nextHighAssgin = str_replace(' name = ', '', $nextHighAssginInfo[1]);
+            } elseif (strpos($value,'unassigned tickets') !== false) {
+                $unassignNum = str_replace('# of unassigned tickets = ', '', $value);
+            } 
+        }
+
+        return new JsonResponse([
+            'next_assign' => $nextAssgin,
+            'next_high_assign' => $nextHighAssgin,
+            'unassign_num' => $unassignNum,
+            ]
+        );
     }
 
     /**

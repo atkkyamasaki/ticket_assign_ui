@@ -56,6 +56,7 @@
                                 {% endfor %}
                             </select>
                         </form>
+                        <button type="submit" id="manual_assign_btn" class="btn btn-primary" disabled>Submit</button>
                         </div>
                     </td>
                     {% endif %}
@@ -71,8 +72,38 @@
 
 <div class="container_script">
 <button type="button" id="auto_assign" class="btn btn-primary">Auto Assign</button>
-<button type="submit" id="next_assign" class="btn btn-primary">Next Assigner Check</button><span id="next_assign_tac"></span>
+</div>
 
+<div class="container_script">
+<button type="submit" id="next_assign" class="btn btn-primary">Next Assigner Check</button>
+    <div class="table_next_assign hide">
+        <table id="table_next_assign" class="table table-hover table-bordered">
+            <tr>
+                <th class="bg-primary" style="color: white;">Next assginee</th>
+                <td id="next_assign_name">
+                {% if next_assign is defined %}
+                    {{ next_assign }}
+                {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th class="bg-primary" style="color: white;">Next assginee (high_pri)</th>
+                <td id="next_high_assign_name">
+                {% if next_high_assign is defined %}
+                    {{ next_high_assign }}
+                {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th class="bg-primary" style="color: white;">Unassigned ticket 数</th>
+                <td id="next_assign_unassign_num">
+                {% if unassign_num is defined %}
+                    {{ unassign_num }}
+                {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <div class="container_person">
@@ -135,5 +166,6 @@
 <p id="page-top"><a href="#wrap">PAGE TOP</a></p>
 
 
+<div class="all_loading hide"></div>
 
 {% endblock %}

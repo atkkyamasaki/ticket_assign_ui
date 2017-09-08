@@ -3,17 +3,26 @@
 $(function () {
   $('#next_assign').on('click', function (event) {
 
+    $('.all_loading').removeClass('hide');
     $.ajax({
       type: 'get',
       url: '/auto_ticket/next_assign',
       success: function (data, status, xhr) {
         console.log(data);
+        $('#next_assign_name').text(data['next_assign']);
+        $('#next_high_assign_name').text(data['next_high_assign']);
+        $('#next_assign_unassign_num').text(data['unassign_num']);
+
       },
       complete: function () {
+        $('.table_next_assign').fadeIn('1000', function () {
+          $('.all_loading').addClass('hide');
+        });
       }
     });
   });
 });
+
 
 // Auto Assign
 
@@ -44,6 +53,9 @@ $(function () {
   $('select#manual_assign').change(function () {
     var caseId = $(this).parents('tr').children('.case_id').text();
     var userId = $(this).val();
+    $(this).children('#manual_assign_btn').prop('disabled', false);
+
+
 
     $.ajax({
       type: 'put',
@@ -141,6 +153,9 @@ $(function() {
 
 
 
+// Loading 画面
+// $('.all_loading').removeClass('hide');
+// $('.all_loading').addClass('hide');
 
 
 
