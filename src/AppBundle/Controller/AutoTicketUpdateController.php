@@ -154,7 +154,7 @@ class AutoTicketUpdateController extends Controller
         // $user->setDa($da);
         // $em->flush();
 
-        $cmd = 'Test_PTO_add.sh ' + $caseId + ' ' + $pto + ' ' + $da;
+        $cmd = 'Test_PTO_add.sh ' + $userId + ' ' + $pto + ' ' + $da;
         exec($cmd, $output);
         
         return new JsonResponse([
