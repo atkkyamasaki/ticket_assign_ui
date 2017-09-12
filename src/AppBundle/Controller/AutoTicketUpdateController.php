@@ -80,6 +80,7 @@ class AutoTicketUpdateController extends Controller
 
         return new JsonResponse([
             'status' => 'successful',
+            'cmd' => $cmd,
         ]);
     }
 
@@ -89,12 +90,13 @@ class AutoTicketUpdateController extends Controller
      */
     public function manualAssignCreateAction($caseId, $newUserId)
     {
-        $cmd = 'Test_PoolMonitor.sh -f ' + $caseId + ' ' + $newUserId;
+        $cmd = 'Test_PoolMonitor.sh -f ' . $caseId . ' ' . $newUserId;
         exec($cmd, $output);
         
         return new JsonResponse([
             'case' => $caseId,
             'new_user' => $newUserId,
+            'cmd' => $cmd,
         ]);
     }
 
@@ -104,13 +106,14 @@ class AutoTicketUpdateController extends Controller
      */
     public function manualAssignUpdateAction($caseId, $oldUserId, $newUserId)
     {
-        $cmd = 'Test_PoolMonitor.sh -s ' + $caseId + ' ' + $oldUserId + ' ' + $newUserId;
+        $cmd = 'Test_PoolMonitor.sh -s ' . $caseId . ' ' . $oldUserId . ' ' . $newUserId;
         exec($cmd, $output);
         
         return new JsonResponse([
             'case' => $caseId,
             'old_user' => $oldUserId,
             'new_user' => $newUserId,
+            'cmd' => $cmd,
         ]);
     }
 
@@ -154,13 +157,14 @@ class AutoTicketUpdateController extends Controller
         // $user->setDa($da);
         // $em->flush();
 
-        $cmd = 'Test_PTO_add.sh ' + $userId + ' ' + $pto + ' ' + $da;
-        exec($cmd, $output);
+        $cmd = 'Test_PTO_add.sh ' . $userId . ' ' . $pto . ' ' . $da;
+        // exec($cmd, $output);
         
         return new JsonResponse([
             'user' => $userId,
             'pto' => $pto,
             'da' => $da,
+            'cmd' => $cmd,
         ]);
     }
 
