@@ -104,7 +104,7 @@ class AutoTicketUpdateController extends Controller
      */
     public function manualAssignUpdateAction($caseId, $oldUserId, $newUserId)
     {
-        $cmd = 'Test_PoolMonitor.sh ' + $caseId + ' ' + $oldUserId + ' ' + $newUserId;
+        $cmd = 'Test_PoolMonitor.sh -s ' + $caseId + ' ' + $oldUserId + ' ' + $newUserId;
         exec($cmd, $output);
         
         return new JsonResponse([
