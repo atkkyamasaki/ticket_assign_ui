@@ -94,8 +94,8 @@ $(function () {
       $('.all_loading').removeClass('hide');
 
       $.ajax({
-        type: 'post',
-        url: '/auto_ticket/manual_assign/' +  caseId + '/' + newUserId,
+        type: 'put',
+        url: '/auto_ticket/manual_assign_create/' +  caseId + '/' + newUserId,
         success: function (data, status, xhr) {
           console.log(data);
         },

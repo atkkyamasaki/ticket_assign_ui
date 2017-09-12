@@ -100,8 +100,8 @@ class AutoTicketUpdateController extends Controller
     }
 
     /**
-     * @Route("/manual_assign/{caseId}/{newUserId}")
-     * @Method({"POST"})
+     * @Route("/manual_assign_create/{caseId}/{newUserId}")
+     * @Method({"PUT"})
      */
     public function manualAssignCreateAction($caseId, $newUserId)
     {
