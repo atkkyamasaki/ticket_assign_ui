@@ -42,8 +42,9 @@
                         <tbody>
                             {% for cases in pool0 %}
                             <tr>
-                                <td class="hide">{{ cases.id }}</td>
-                                <td class="case_id">{{ cases.caseId }}</td>
+                                <td class="hide">{{ cases.id }}</i>
+                                </td>
+                                <td class="case_id">{{ cases.caseId }}<i class="fa fa-times-circle case_delete" aria-hidden="true"></i></td>
                                 <td>{{ cases.title }}</td>
                                 <td>{{ cases.priority }}</td>
                                 <td>{{ cases.country }}</td>
@@ -94,7 +95,10 @@
                 <p class="operation_hedder"><i class="fa fa-cogs" aria-hidden="true"></i>Operation</p>              
                 <div>
                     <div class="container_auto_assign">
-                        <span>Auto Assign :  </span><button type="button" id="auto_assign" class="script_submit_button">Submit<i class="fa fa-cog button_icon" aria-hidden="true"></i></button>
+                        <span>Auto Assign :  </span>
+                        <button type="button" id="auto_assign" class="script_submit_button">Auto Assign<i class="fa fa-user-plus button_icon" aria-hidden="true"></i></button>
+                        <span> / </span>
+                        <button type="button" id="case_move" class="script_submit_button">Case Move<i class="fa fa-cog button_icon" aria-hidden="true"></i></button>
                     </div>
                     <div>
                         <span>Next Assigner Check :  </span><button type="submit" id="next_assign" class="script_submit_button">Update<i class="fa fa-refresh button_icon" aria-hidden="true"></i></button>
@@ -177,7 +181,7 @@
                                                     <option value="1">Don't assign</option>
                                                 </select>
                                             </p>
-                                            <button type="button" class="assignee_status_update btn btn-primary">Update</button>
+                                            <button type="button" class="assignee_status_update">Update<i class="fa fa-refresh button_icon" aria-hidden="true"></i></button>
                                         </form>
                                     </div>
                                 </td>

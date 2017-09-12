@@ -85,6 +85,21 @@ class AutoTicketUpdateController extends Controller
     }
 
     /**
+     * @Route("/case_move")
+     * @Method({"PUT"})
+     */
+    public function caseMoveAction()
+    {
+        $cmd = 'Test_CaseMover.sh';
+        exec($cmd, $output);
+
+        return new JsonResponse([
+            'status' => 'successful',
+            'cmd' => $cmd,
+        ]);
+    }
+
+    /**
      * @Route("/manual_assign/{caseId}/{newUserId}")
      * @Method({"POST"})
      */
@@ -113,6 +128,21 @@ class AutoTicketUpdateController extends Controller
             'case' => $caseId,
             'old_user' => $oldUserId,
             'new_user' => $newUserId,
+            'cmd' => $cmd,
+        ]);
+    }
+
+    /**
+     * @Route("/case_delete/{caseId}")
+     * @Method({"DELETE"})
+     */
+    public function caseDeleteAction($caseId)
+    {
+        $cmd = 'Test_delete.sh ' . $caseId;
+        exec($cmd, $output);
+
+        return new JsonResponse([
+            'status' => 'successful',
             'cmd' => $cmd,
         ]);
     }
@@ -158,7 +188,7 @@ class AutoTicketUpdateController extends Controller
         // $em->flush();
 
         $cmd = 'Test_PTO_add.sh ' . $userId . ' ' . $pto . ' ' . $da;
-        // exec($cmd, $output);
+        exec($cmd, $output);
         
         return new JsonResponse([
             'user' => $userId,

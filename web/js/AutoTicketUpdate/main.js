@@ -39,6 +39,7 @@ $(function () {
         type: 'put',
         url: '/auto_ticket/auto_assign',
         success: function (data, status, xhr) {
+          console.log(data);
         },
         complete: function () {
           window.location.href = '/auto_ticket/view';
@@ -46,6 +47,28 @@ $(function () {
       });
     }
   });
+
+  $('#case_move').on('click', function (event) {
+
+    if(!confirm('割り当て処理を適用しますか？')){
+      /* キャンセルの時の処理 */
+      return false;
+    }else{
+      /* OKの時の処理 */
+      $('.all_loading').removeClass('hide');
+      $.ajax({
+        type: 'put',
+        url: '/auto_ticket/case_move',
+        success: function (data, status, xhr) {
+          console.log(data);
+        },
+        complete: function () {
+          window.location.href = '/auto_ticket/view';
+        }
+      });
+    }
+  });
+
 });
 
 
@@ -85,6 +108,8 @@ $(function () {
   });
 });
 
+
+
 // Manual Assign (Assagin_Update)
 
 $(function () {
@@ -123,6 +148,36 @@ $(function () {
 });
 
 
+
+// Case Delete
+
+$(function () {
+  $('.case_delete').on('click', function (event) {
+
+    var caseId = $(this).parents('.case_id').text();
+    console.log(caseId);
+
+    if(!confirm('CaseID:' + caseId + 'を削除しますか？')){
+      /* キャンセルの時の処理 */
+      return false;
+    }else{
+      /* OKの時の処理 */
+      $('.all_loading').removeClass('hide');
+
+      $.ajax({
+        type: 'delete',
+        url: '/auto_ticket/case_delete/' +  caseId,
+        success: function (data, status, xhr) {
+          console.log(data);
+        },
+        complete: function () {
+          window.location.href = '/auto_ticket/view';
+          // $('.all_loading').addClass('hide');
+        }
+      });
+    }
+  });
+});
 
 // Assignee Status Change
 
