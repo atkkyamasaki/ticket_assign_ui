@@ -50,6 +50,8 @@ class AutoTicketUpdateController extends Controller
     {
         exec('Test_PoolMonitor.sh', $output);
 
+        $this->writeOutputLog($output);
+
         foreach ($output as $value) {
             if (strpos($value,'Next assginee            :') !== false) {
                 $nextAssginInfo = explode(',', $value);
@@ -138,7 +140,7 @@ class AutoTicketUpdateController extends Controller
      */
     public function caseDeleteAction($caseId)
     {
-        $cmd = 'Test_delete.sh ' . $caseId;
+        $cmd = 'Test_PoolMonitor.sh -r ' . $caseId;
         exec($cmd, $output);
 
         return new JsonResponse([
@@ -189,6 +191,9 @@ class AutoTicketUpdateController extends Controller
 
         $cmd = 'Test_PTO_add.sh ' . $userId . ' ' . $pto . ' ' . $da;
         exec($cmd, $output);
+
+        $this->writeOutputLog($output);
+
         
         return new JsonResponse([
             'user' => $userId,
@@ -223,5 +228,20 @@ class AutoTicketUpdateController extends Controller
             SerializationContext::create()->enableMaxDepthChecks()->setSerializeNull(true)
         );
     }
+
+    /**
+     * Write cmd output to log file.
+     *
+     * @param array $outputs
+     * @return boolean
+     */
+    private function writeOutputLog($output)
+    {
+        error_log('debug = ' . print_r($assignee, true) . "\n", 3, 'C:\Users\Administrator\Desktop\debug.txt');
+        
+        return true;
+    }
+
+
 }
 
