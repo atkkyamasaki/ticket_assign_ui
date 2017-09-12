@@ -51,13 +51,13 @@
                                 <td>{{ cases.tac }}</td>
                                 <td>{{ cases.model }}</td>
                                 <td>{{ cases.company }}</td>
-                                <td class="hide">{{ cases.assignee }}</td>
+                                <td class="case_assignee hide">{{ cases.assignee }}</td>
                                 {% if cases.name %}
                                 <td>{{ cases.name }}
                                     <span class="change_assign_icon">Change</span>
                                     <div class="hide">
                                         <form>
-                                            <select class="manual_assign" name="manual_assign">
+                                            <select class="manual_assign_update" name="manual_assign_update">
                                                 <option selected disabled>担当者を選択</option>
                                                 {% for name in assignee %}
                                                 <option value="{{ name.id }}">{{ name.name }}</option>
@@ -71,7 +71,7 @@
                                     <span class="not_assign_icon">Not Assign</span>
                                     <div class="hide">
                                         <form>
-                                            <select class="manual_assign" name="manual_assign">
+                                            <select class="manual_assign_create" name="manual_assign_create">
                                                 <option selected disabled>担当者を選択</option>
                                                 {% for name in assignee %}
                                                 <option value="{{ name.id }}">{{ name.name }}</option>

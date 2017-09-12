@@ -36,7 +36,8 @@ body {
 .container_script {
     padding: 8px;
     margin: 8px 8px 8px 80px;
-    width: 500px; 
+    width: 500px;
+    position: relative;
 }
 
 .container_script > div {
@@ -44,7 +45,7 @@ body {
     padding: 32px 16px 16px 16px;
     position: absolute;
     width: 500px;
-    top: 485px;
+    top: 30px;
 }
 .operation_hedder {
     position: absolute;
@@ -101,7 +102,8 @@ body {
     opacity: 0.7;
 }
 
-.manual_assign {
+.manual_assign_create,
+.manual_assign_update {
     border-radius: 6px;   
 }
 

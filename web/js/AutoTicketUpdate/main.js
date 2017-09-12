@@ -49,7 +49,7 @@ $(function () {
 });
 
 
-// Manual Assign
+// Manual Assign (Assagin_Create)
 
 $(function () {
   $('.not_assign_icon').on('click', function (event) {
@@ -57,16 +57,48 @@ $(function () {
     $(this).next('div').removeClass('hide');
   });
 
+  $('select.manual_assign_create').change(function () {
+
+    var caseId = $(this).parents('tr').children('.case_id').text();
+    var newUserId = $(this).val();
+    var tacNameClassValue = '.table_tac_name_' + newUserId;
+
+    if(!confirm($(tacNameClassValue).text() + 'へチケット(CaseID:' + caseId + ')の割り当てを実行しますか？')){
+      /* キャンセルの時の処理 */
+      return false;
+    }else{
+      /* OKの時の処理 */
+      $('.all_loading').removeClass('hide');
+
+      $.ajax({
+        type: 'post',
+        url: '/auto_ticket/manual_assign/' +  caseId + '/' + newUserId,
+        success: function (data, status, xhr) {
+          console.log(data);
+        },
+        complete: function () {
+          window.location.href = '/auto_ticket/view';
+          // $('.all_loading').addClass('hide');
+        }
+      });
+    }
+  });
+});
+
+// Manual Assign (Assagin_Update)
+
+$(function () {
   $('.change_assign_icon').on('click', function (event) {
     $(this).addClass('hide');
     $(this).next('div').removeClass('hide');
   });
 
-  $('select.manual_assign').change(function () {
+  $('select.manual_assign_update').change(function () {
 
+    var oldUserId = $(this).parents('tr').children('.case_assignee').text();
     var caseId = $(this).parents('tr').children('.case_id').text();
-    var userId = $(this).val();
-    var tacNameClassValue = '.table_tac_name_' + userId;
+    var newUserId = $(this).val();
+    var tacNameClassValue = '.table_tac_name_' + newUserId;
 
     if(!confirm($(tacNameClassValue).text() + 'へチケット(CaseID:' + caseId + ')の割り当てを実行しますか？')){
       /* キャンセルの時の処理 */
@@ -77,7 +109,7 @@ $(function () {
 
       $.ajax({
         type: 'put',
-        url: '/auto_ticket/manual_assign/' +  caseId + '/' + userId,
+        url: '/auto_ticket/manual_assign/' +  caseId + '/' + oldUserId + '/' + newUserId,
         success: function (data, status, xhr) {
           console.log(data);
         },

@@ -84,17 +84,33 @@ class AutoTicketUpdateController extends Controller
     }
 
     /**
-     * @Route("/manual_assign/{caseId}/{userId}")
-     * @Method({"PUT"})
+     * @Route("/manual_assign/{caseId}/{newUserId}")
+     * @Method({"POST"})
      */
-    public function manualAssignAction($caseId, $userId)
+    public function manualAssignCreateAction($caseId, $newUserId)
     {
-        $cmd = 'Test_PoolMonitor.sh -f ' + $caseId + ' ' + $userId;
+        $cmd = 'Test_PoolMonitor.sh -f ' + $caseId + ' ' + $newUserId;
         exec($cmd, $output);
         
         return new JsonResponse([
             'case' => $caseId,
-            'user' => $userId,
+            'new_user' => $newUserId,
+        ]);
+    }
+
+    /**
+     * @Route("/manual_assign/{caseId}/{oldUserId}/{newUserId}")
+     * @Method({"PUT"})
+     */
+    public function manualAssignUpdateAction($caseId, $oldUserId, $newUserId)
+    {
+        $cmd = 'Test_PoolMonitor.sh ' + $caseId + ' ' + $oldUserId + ' ' + $newUserId;
+        exec($cmd, $output);
+        
+        return new JsonResponse([
+            'case' => $caseId,
+            'old_user' => $oldUserId,
+            'new_user' => $newUserId,
         ]);
     }
 
@@ -118,25 +134,28 @@ class AutoTicketUpdateController extends Controller
         // $em->flush();
 
         // データの更新処理
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:Assignee')->find($userId);
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '. $userId
-            );
-        }
-        $user->setPto($pto);
-        $em->flush();
+        // $em = $this->getDoctrine()->getManager();
+        // $user = $em->getRepository('AppBundle:Assignee')->find($userId);
+        // if (!$user) {
+        //     throw $this->createNotFoundException(
+        //         'No user found for id '. $userId
+        //     );
+        // }
+        // $user->setPto($pto);
+        // $em->flush();
 
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:Assignee')->find($userId);
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '. $userId
-            );
-        }
-        $user->setDa($da);
-        $em->flush();
+        // $em = $this->getDoctrine()->getManager();
+        // $user = $em->getRepository('AppBundle:Assignee')->find($userId);
+        // if (!$user) {
+        //     throw $this->createNotFoundException(
+        //         'No user found for id '. $userId
+        //     );
+        // }
+        // $user->setDa($da);
+        // $em->flush();
+
+        $cmd = 'Test_PTO_add.sh ' + $caseId + ' ' + $pto + ' ' + $da;
+        exec($cmd, $output);
         
         return new JsonResponse([
             'user' => $userId,
