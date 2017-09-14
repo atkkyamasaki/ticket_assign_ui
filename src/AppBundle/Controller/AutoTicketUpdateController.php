@@ -58,7 +58,8 @@ class AutoTicketUpdateController extends Controller
      */
     public function nextAssignAction()
     {
-        exec('Test_PoolMonitor.sh', $output);
+        $cmd = 'Test_PoolMonitor.sh';
+        exec($cmd, $output);
         $this->writeOutputLog($cmd, $output);
 
         foreach ($output as $value) {
@@ -277,11 +278,11 @@ class AutoTicketUpdateController extends Controller
         $date = date('Y/m/d H:i:s');
 
         $delimiter = ',+*+*+,';
-        $writeData = $date . $delimiter . $cmd . $delimiter . implode("", $output) . $delimiter . PHP_EOL;
+        $writeData = $date . $delimiter . $cmd . $delimiter . implode(PHP_EOL, $output) . $delimiter . PHP_EOL;
         
         $logFilePath = '../src/AppBundle/Resources/config/AutoTicketUpdate/logs.csv';
 
-        $fp = fopen($logFilePath, 'a');
+        $fp = fopen($logFilePath, 'w+');
         rewind($fp);
         fwrite($fp, $writeData);
         fclose($fp);
