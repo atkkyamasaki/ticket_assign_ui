@@ -2,12 +2,14 @@
 
 $(function () {
   $('#next_assign').on('click', function (event) {
+    $('.table_next_assign').fadeOut('1000');
 
-    $('.all_loading').removeClass('hide');
     $.ajax({
       type: 'get',
       url: '/auto_ticket/next_assign',
       success: function (data, status, xhr) {
+
+        console.log(data);
 
         $('#next_assign_name').text(data['next_assign']);
         $('#next_high_assign_name').text(data['next_high_assign']);
@@ -15,9 +17,7 @@ $(function () {
 
       },
       complete: function () {
-        $('.table_next_assign').fadeIn('1000', function () {
-          $('.all_loading').addClass('hide');
-        });
+        $('.table_next_assign').fadeIn('1000');
       }
     });
   });
@@ -194,7 +194,10 @@ $(function () {
     });
 
     $('.assignee_status_update').on('click', function (event) {
-      $('.all_loading').removeClass('hide');
+
+      $(this).parents('td').children('.table_tac_name').fadeOut('1000');
+      $('.assignee_status').addClass('hide');
+      
       var userId = $(this).parent().parent().parent().prev().text();
       var ptoStatus = $(this).prev().prev().children('.pto_status').val();
       var daStatus = $(this).prev().children('.da_status').val();
@@ -220,11 +223,11 @@ $(function () {
                   var daElement = '#tac_da_icon_' + value.id;
 
                   if (value.pto == 0) {
-                    $(daElement).removeClass('.attend_icon_red');
-                    $(daElement).addClass('.attend_icon_green');
+                    $(ptoElement).removeClass('attend_icon_red');
+                    $(ptoElement).addClass('attend_icon_green');
                   } else {
-                    $(daElement).removeClass('.attend_icon_green');
-                    $(daElement).addClass('.attend_icon_red');
+                    $(ptoElement).removeClass('attend_icon_green');
+                    $(ptoElement).addClass('attend_icon_red');
                   }
                   
                   if (value.da == 0) {
@@ -238,8 +241,8 @@ $(function () {
 
             },
             complete: function () {
-              $('.all_loading').addClass('hide');
-              $('.assignee_status').addClass('hide');
+              var tdNameElement = '#tac_pto_icon_' + userId;
+              $(tdNameElement).parents('td').children('.table_tac_name').fadeIn('1000');
             }
           });
 

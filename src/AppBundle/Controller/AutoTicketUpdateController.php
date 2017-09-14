@@ -309,8 +309,6 @@ class AutoTicketUpdateController extends Controller
 
             if (preg_match("/^20..\/..\/../", $logDate)) {
                 if (date('Y/m/d', strtotime($cutDate)) < date('Y/m/d', strtotime($logDate))) {
-                    var_dump(date('Y/m/d', strtotime($cutDate)));
-                    var_dump(date('Y/m/d', strtotime($logDate)));
                     $newLog = $newLog . $log;
                 } else {
                     break;
