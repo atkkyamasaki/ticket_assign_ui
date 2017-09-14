@@ -158,13 +158,15 @@
                                 <td class="table_tac_id hide">{{ tac.id }}</td>
                                 <td>
                                     {% if tac.pto == 0 %}
-                                    <span class="attend_icon_green">●</span>
+                                    <span id="tac_pto_icon_{{ i }}" class="attend_icon_green">●</span>
                                     {% elseif tac.pto == 1 %}
-                                    <span class="attend_icon_red">●</span>
+                                    <span id="tac_pto_icon_{{ i }}" class="attend_icon_red">●</span>
                                     {% endif %}
                                     <span class="table_tac_name table_tac_name_{{ i }}">{{ tac.name }}</span>
                                     {% if tac.da == 1 %}
-                                    <span class="fa fa-ban" style="color: red;"></span>
+                                    <span id="tac_da_icon_{{ i }}" class="fa fa-ban" style="color: red;"></span>
+                                    {% else %}
+                                    <span id="tac_da_icon_{{ i }}" class="fa fa-ban hide" style="color: red;"></span>
                                     {% endif %}
                                     <div class="assignee_status hide">
                                         <form>

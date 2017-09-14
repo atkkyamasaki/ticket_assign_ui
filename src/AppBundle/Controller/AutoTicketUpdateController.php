@@ -234,7 +234,6 @@ class AutoTicketUpdateController extends Controller
             $zip->close();
         }
 
-
         return new JsonResponse([
             'status' => 'successful',
         ]);
@@ -281,12 +280,48 @@ class AutoTicketUpdateController extends Controller
         $writeData = $date . $delimiter . $cmd . $delimiter . implode(PHP_EOL, $output) . $delimiter . PHP_EOL;
         
         $logFilePath = '../src/AppBundle/Resources/config/AutoTicketUpdate/logs.csv';
+        $this->rotateOutputLog($logFilePath);
 
-        $fp = fopen($logFilePath, 'w+');
-        rewind($fp);
-        fwrite($fp, $writeData);
+        $contents = file_get_contents($logFilePath);
+        $contents = $writeData . $contents;
+        file_put_contents($logFilePath, $contents);
+
+        return true;
+    }
+
+    /**
+     * Log file rotate.
+     *
+     * @param string $logFilePath
+     * @return boolean
+     */
+    private function rotateOutputLog($logFilePath)
+    {
+        $cutDate = date('Y/m/d', strtotime('-7 day'));
+        $newLog = '';
+
+        $fp = fopen( $logFilePath, 'r' );
+
+        while (!feof($fp)) {
+
+            $log = fgets($fp);
+            $logDate = substr($log, 0, 10);
+
+            if (preg_match("/^20..\/..\/../", $logDate)) {
+                if (date('Y/m/d', strtotime($cutDate)) < date('Y/m/d', strtotime($logDate))) {
+                    var_dump(date('Y/m/d', strtotime($cutDate)));
+                    var_dump(date('Y/m/d', strtotime($logDate)));
+                    $newLog = $newLog . $log;
+                } else {
+                    break;
+                }
+            } else {
+                $newLog = $newLog . $log;
+            }
+        }
         fclose($fp);
-
+        
+        file_put_contents($logFilePath, $newLog);
         return true;
     }
 
@@ -308,7 +343,7 @@ class AutoTicketUpdateController extends Controller
         }
 
         $result = [];
-        for ($i = 0, $hasDelimiter = true; $hasDelimiter; $i++) { 
+        for ($i = 0, $hasDelimiter = true, $displayMaxNum = 30; $hasDelimiter && $i < $displayMaxNum; $i++) { 
 
             if ($i === 0) {
                 $result[$i] = explode($delimiter, $logs, 4);
@@ -332,5 +367,35 @@ class AutoTicketUpdateController extends Controller
         return $result;
     }
 
+    /**
+     * @Route("/api/assignee")
+     * @Method({"GET"})
+     */
+    public function apiAssigneeAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $assigneeRepository = $em->getRepository('AppBundle:Assignee');
+        $assigneeList = $assigneeRepository->findBy([], ['id' => 'ASC']);
+        $assignee = $this->toArray($assigneeList);
+
+        return new JsonResponse($assignee);
+    }
+
+    /**
+     * @Route("/api/log")
+     * @Method({"GET"})
+     */
+    public function apiLogAction()
+    {
+        $logFilePath = '../src/AppBundle/Resources/config/AutoTicketUpdate/logs.csv';
+
+        if (!file_exists($logFilePath)) {
+            $logs = [['file no exists', '', '']];
+        } else {
+            $logs = $this->getArrayOutputLog($logFilePath);
+        }
+
+        return new JsonResponse($logs);
+    }
 }
 

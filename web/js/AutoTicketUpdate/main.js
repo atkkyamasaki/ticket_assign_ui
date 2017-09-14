@@ -203,10 +203,46 @@ $(function () {
         type: 'put',
         url: '/auto_ticket/assignee_status/' +  userId + '/' + ptoStatus + '/' + daStatus,
         success: function (data, status, xhr) {
-          console.log(data);
         },
         complete: function () {
-          window.location.href = '/auto_ticket/view';
+          // window.location.href = '/auto_ticket/view';
+
+          $.ajax({
+            type: 'get',
+            url: '/auto_ticket/api/assignee',
+            success: function (data, status, xhr) {
+
+              $.each(data, function(i, value) {
+
+                if (value.id == userId) {
+
+                  var ptoElement = '#tac_pto_icon_' + value.id;
+                  var daElement = '#tac_da_icon_' + value.id;
+
+                  if (value.pto == 0) {
+                    $(daElement).removeClass('.attend_icon_red');
+                    $(daElement).addClass('.attend_icon_green');
+                  } else {
+                    $(daElement).removeClass('.attend_icon_green');
+                    $(daElement).addClass('.attend_icon_red');
+                  }
+                  
+                  if (value.da == 0) {
+                    $(daElement).addClass('hide');
+                  } else {
+                    $(daElement).removeClass('hide');
+                  }
+
+                }
+              });
+
+            },
+            complete: function () {
+              $('.all_loading').addClass('hide');
+              $('.assignee_status').addClass('hide');
+            }
+          });
+
         }
       });
     });
