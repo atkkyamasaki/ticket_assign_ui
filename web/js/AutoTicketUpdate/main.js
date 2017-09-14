@@ -215,7 +215,21 @@ $(function () {
 
 
 
+// Log File Download
 
+$(function () {
+  $('#log_download').on('click', function (event) {
+    $.ajax({
+      type: 'get',
+      url: '/auto_ticket/log_download',
+      success: function (data, status, xhr) {
+      },
+      complete: function () {
+        location.href = '/image/AutoTicketUpdate/logs.zip';
+      }
+    });
+  });
+});
 
 
 // TAC Summary

@@ -5,23 +5,66 @@ body {
 .container_title,
 .container_ticket,
 .container_script,
-.container_person {
+.container_person,
+.container_log {
     padding: 8px 4px 4px 8px;
     margin: 8px 8px 0 8px;   
 }
 
 .container_title > h1 {
     font-size: 1.5em;
-    background-color: rgba(0,0,0,0.04);
+    background-color: #0275d8;
+    color: white;
     padding: 12px 24px;
-    border-radius: 8px;
     width: 350px;
-    box-shadow: 4px 4px rgba(0,0,0,0.4);
 }
 
 .container_title > h1 > i {
     padding: 0 12px 0 0;
 }
+
+/* Tab 表示用 CSS */
+#tab_display {
+    padding: 16px;
+}
+
+#tab_display > ul > li {
+    float: left;
+    list-style-type: none;
+    width: 25%;
+    max-width: 160px;
+}
+ 
+#tab_display > ul > li > a {
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 16px;
+    text-align: center;
+    width: 100%;
+    background: #0275d8;
+    border: 6px solid #0275d8;
+    border-bottom: none;
+}
+
+#tab_display > ul > li > a:hover{
+    opacity: 0.5
+}
+ 
+#tab_display > ul > li > a.current {
+    background: white;
+    color: black;
+}
+ 
+#tab_display #contents{
+    clear:both;
+}
+ 
+#tab_display #contents > div {
+    /*border: 1px dashed #0275d8;*/
+}
+
 
 
 /* Tab1 用 */
@@ -102,7 +145,8 @@ body {
 }
 
 .change_assign_icon,
-.script_submit_button {
+.script_submit_button,
+.log_download_button {
     background-color: #0275d8;
     color: white;
     padding: 6px;
@@ -112,7 +156,8 @@ body {
 }
 
 .change_assign_icon:hover,
-.script_submit_button:hover {
+.script_submit_button:hover,
+.log_download_button:hover {
     opacity: 0.7;
 }
 
@@ -228,46 +273,19 @@ body {
     box-shadow: 6px 6px rgba(0,0,0,0.4);
 }
 
-
-
-/* Tab 表示用 CSS */
-#tab_display {
-    padding: 16px;
+/* Table3 用 */
+.container_log .button_icon {
+    padding: 0 4px;
 }
 
-#tab_display > ul > li {
-    float: left;
-    list-style-type: none;
-    width: 25%;
-    max-width: 160px;
-}
- 
-#tab_display > ul > li > a {
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 16px;
-    text-align: center;
-    width: 100%;
-    background: #0275d8;
-    border: 6px solid #0275d8;
-    border-bottom: none;
+#table_log .hedder_icon {
+    padding: 0 4px 0 0;
 }
 
-#tab_display > ul > li > a:hover{
-    opacity: 0.5
+#table_log th:nth-child(1) {
+    width: 200px
 }
- 
-#tab_display > ul > li > a.current {
-    background: white;
-    color: black;
-}
- 
-#tab_display #contents{
-    clear:both;
-}
- 
-#tab_display #contents > div {
-    /*border: 1px dashed #0275d8;*/
+
+#table_log th:nth-child(2) {
+    width: 200px
 }

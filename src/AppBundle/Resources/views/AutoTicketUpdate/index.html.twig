@@ -14,7 +14,7 @@
     <ul>
         <li><a href="#tab1" class="current">Case Status</a></li>
         <li><a href="#tab2" class="">TAC Status</a></li>
-        <li><a href="#tab3" class="">予備</a></li>
+        <li><a href="#tab3" class="">Logs</a></li>
     </ul>
     <div id="contents">
         <div id="tab1">
@@ -203,6 +203,31 @@
         </div>
 
         <div id="tab3">
+            <div class="container_log">
+            <span>Log File Download :  </span>
+            <button type="button" id="log_download" class="log_download_button">Download<i class="fa fa-download button_icon" aria-hidden="true"></i></button>
+                <div class="table_log">
+                    <table id="table_log" class="table table-hover">
+                        <caption style="caption-side: top;">Logs</caption>
+                        <thead>
+                            <tr class="bg-primary" style="color: white;">
+                                <th><i class="fa fa-clock-o hedder_icon" aria-hidden="true"></i>TIME</th>
+                                <th><i class="fa fa-cogs hedder_icon" aria-hidden="true"></i>COMMAND</th>
+                                <th><i class="fa fa-th-list hedder_icon" aria-hidden="true"></i>RESULT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in logs %}
+                            <tr>
+                                <td>{{ log.0 }}</td>
+                                <td>{{ log.1 }}</td>
+                                <td>{{ log.2 | nl2br }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

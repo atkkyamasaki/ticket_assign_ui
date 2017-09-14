@@ -32,12 +32,22 @@ class AutoTicketUpdateController extends Controller
         $pool0List = $pool0Repository->findBy([], ['id' => 'ASC']);
         $pool0 = $this->toArray($pool0List);
 
+
+        $logFilePath = '../src/AppBundle/Resources/config/AutoTicketUpdate/logs.csv';
+
+        if (!file_exists($logFilePath)) {
+            $logs = [['file no exists', '', '']];
+        } else {
+            $logs = $this->getArrayOutputLog($logFilePath);
+        }
+
         // error_log('debug = ' . print_r($assignee, true) . "\n", 3,
         // 'C:\Users\Administrator\Desktop\debug.txt');
 
         return $this->render('AppBundle:AutoTicketUpdate:index.html.twig', [
             'assignee' => $assigneeList,
             'pool0' => $pool0,
+            'logs' => $logs,
         ]);
 
     }
@@ -49,8 +59,7 @@ class AutoTicketUpdateController extends Controller
     public function nextAssignAction()
     {
         exec('Test_PoolMonitor.sh', $output);
-
-        $this->writeOutputLog($output);
+        $this->writeOutputLog($cmd, $output);
 
         foreach ($output as $value) {
             if (strpos($value,'Next assginee            :') !== false) {
@@ -79,6 +88,7 @@ class AutoTicketUpdateController extends Controller
     {
         $cmd = 'Test_PoolMonitor.sh -a';
         exec($cmd, $output);
+        $this->writeOutputLog($cmd, $output);
 
         return new JsonResponse([
             'status' => 'successful',
@@ -94,6 +104,7 @@ class AutoTicketUpdateController extends Controller
     {
         $cmd = 'Test_CaseMover.sh';
         exec($cmd, $output);
+        $this->writeOutputLog($cmd, $output);
 
         return new JsonResponse([
             'status' => 'successful',
@@ -109,6 +120,7 @@ class AutoTicketUpdateController extends Controller
     {
         $cmd = 'Test_PoolMonitor.sh -f ' . $caseId . ' ' . $newUserId;
         exec($cmd, $output);
+        $this->writeOutputLog($cmd, $output);
         
         return new JsonResponse([
             'case' => $caseId,
@@ -125,6 +137,7 @@ class AutoTicketUpdateController extends Controller
     {
         $cmd = 'Test_PoolMonitor.sh -s ' . $caseId . ' ' . $oldUserId . ' ' . $newUserId;
         exec($cmd, $output);
+        $this->writeOutputLog($cmd, $output);
         
         return new JsonResponse([
             'case' => $caseId,
@@ -142,6 +155,7 @@ class AutoTicketUpdateController extends Controller
     {
         $cmd = 'Test_PoolMonitor.sh -r ' . $caseId;
         exec($cmd, $output);
+        $this->writeOutputLog($cmd, $output);
 
         return new JsonResponse([
             'status' => 'successful',
@@ -191,15 +205,37 @@ class AutoTicketUpdateController extends Controller
 
         $cmd = 'Test_PTO_add.sh ' . $userId . ' ' . $pto . ' ' . $da;
         exec($cmd, $output);
+        $this->writeOutputLog($cmd, $output);
 
-        $this->writeOutputLog($output);
-
-        
         return new JsonResponse([
             'user' => $userId,
             'pto' => $pto,
             'da' => $da,
             'cmd' => $cmd,
+        ]);
+    }
+
+    /**
+     * @Route("/log_download")
+     * @Method({"GET"})
+     */
+    public function logDownloadAction()
+    {
+        $logFilePath = '../src/AppBundle/Resources/config/AutoTicketUpdate/logs.csv';
+        $downloadLogPath = '../web/image/AutoTicketUpdate/logs.zip';
+
+        unlink($downloadLogPath);
+        $zip = new ZipArchive();
+        $res = $zip->open($downloadLogPath, ZipArchive::CREATE);
+         
+        if ($res === true) {         
+            $zip->addFile($logFilePath, 'logs.log');
+            $zip->close();
+        }
+
+
+        return new JsonResponse([
+            'status' => 'successful',
         ]);
     }
 
@@ -232,16 +268,68 @@ class AutoTicketUpdateController extends Controller
     /**
      * Write cmd output to log file.
      *
-     * @param array $outputs
+     * @param string $cmd
+     * @param array $output
      * @return boolean
      */
-    private function writeOutputLog($output)
+    private function writeOutputLog($cmd, $output)
     {
-        error_log('debug = ' . print_r($assignee, true) . "\n", 3, 'C:\Users\Administrator\Desktop\debug.txt');
+        $date = date('Y/m/d H:i:s');
+
+        $delimiter = ',+*+*+,';
+        $writeData = $date . $delimiter . $cmd . $delimiter . implode("", $output) . $delimiter . PHP_EOL;
         
+        $logFilePath = '../src/AppBundle/Resources/config/AutoTicketUpdate/logs.csv';
+
+        $fp = fopen($logFilePath, 'a');
+        rewind($fp);
+        fwrite($fp, $writeData);
+        fclose($fp);
+
         return true;
     }
 
+    /**
+     * get Array from log file.
+     *
+     * @param string $logFilePath
+     * @return array
+     */
+    private function getArrayOutputLog($logFilePath)
+    {
+        $date = date('Y/m/d H:i:s');
+        $delimiter = ',+*+*+,';
+
+        $logs = file_get_contents($logFilePath);
+
+        if (!strlen($logs)) {
+            return [['log no exists', '', '']];
+        }
+
+        $result = [];
+        for ($i = 0, $hasDelimiter = true; $hasDelimiter; $i++) { 
+
+            if ($i === 0) {
+                $result[$i] = explode($delimiter, $logs, 4);
+                $newLogs = ltrim($result[$i][3], PHP_EOL);
+                array_pop($result[$i]);
+
+            } else {
+
+                if (strpos($newLogs, $delimiter) !== false) {
+
+                    $result[$i] = explode($delimiter, $newLogs, 4);
+                    $newLogs = ltrim($result[$i][3], PHP_EOL);
+                    array_pop($result[$i]);
+
+                } else {
+                    $hasDelimiter = false;
+                }
+            }
+        }
+
+        return $result;
+    }
 
 }
 
