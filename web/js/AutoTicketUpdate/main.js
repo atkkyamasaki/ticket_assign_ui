@@ -2,7 +2,7 @@
 
 $(function () {
   $('#next_assign').on('click', function (event) {
-    $('.table_next_assign').fadeOut('1000');
+    $('.table_next_assign').fadeOut('200');
 
     $.ajax({
       type: 'get',
@@ -14,10 +14,10 @@ $(function () {
         $('#next_assign_name').text(data['next_assign']);
         $('#next_high_assign_name').text(data['next_high_assign']);
         $('#next_assign_unassign_num').text(data['unassign_num']);
+        $('.table_next_assign').fadeIn('200');
 
       },
       complete: function () {
-        $('.table_next_assign').fadeIn('1000');
       }
     });
   });
@@ -195,7 +195,7 @@ $(function () {
 
     $('.assignee_status_update').on('click', function (event) {
 
-      $(this).parents('td').children('.table_tac_name').fadeOut('1000');
+      $(this).parents('td').children('.table_tac_name').fadeOut('200');
       $('.assignee_status').addClass('hide');
       
       var userId = $(this).parent().parent().parent().prev().text();
@@ -242,7 +242,7 @@ $(function () {
             },
             complete: function () {
               var tdNameElement = '#tac_pto_icon_' + userId;
-              $(tdNameElement).parents('td').children('.table_tac_name').fadeIn('1000');
+              $(tdNameElement).parents('td').children('.table_tac_name').fadeIn('200');
             }
           });
 
