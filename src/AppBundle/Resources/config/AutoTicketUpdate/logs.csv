@@ -1,0 +1,49 @@
+2017/09/14 16:55:44,+*+*+,Test_PoolMonitor.sh,+*+*+,2017/09/14 16:55:43 Checking ...
+Usage : java -jar ... [-a] [-u]
+-a : Auto assign all registered ticket in the pool
+-u : Update assignee name and que group in the pool
+-f <case_id> <id of assignee> : Assign the case to the assignee force
+-s <case_id> <current id of assignee> <new id of assignee> : Swap assignee of the case
+-s <case_id> : remove case from pool0
+
+Next assginee            : id = 8, name = Eiichi Sugiyama, laps = 0, point = 18, high_pri = 1
+Next assginee (high_pri) : id = 8, name = Eiichi Sugiyama, laps = 0, point = 18, high_pri = 1
+# of unassigned tickets = 0,+*+*+,
+2017/09/14 16:54:44,+*+*+,Test_PoolMonitor.sh -s 2352328 8 1,+*+*+,2017/09/14 16:54:44 Checking ...
+high_pri = 1
+Forced assginee : id = 1, name = Ryo Ishii, laps = 8, point = 26, high_pri = 5
+selected assginee : id = 8, name = Eiichi Sugiyama, laps = 1, point = 19, high_pri = 2,+*+*+,
+2017/09/14 16:54:07,+*+*+,Test_PoolMonitor.sh -a,+*+*+,2017/09/14 16:54:07 Checking ...
+Unassgined case_id = 2352328
+auto assign case_id = 2352328
+high_pri = 1
+Next assginee (high_pri) : id = 8, name = Eiichi Sugiyama, laps = 0, point = 18, high_pri = 1,+*+*+,
+2017/09/14 16:53:56,+*+*+,Test_PoolMonitor.sh,+*+*+,2017/09/14 16:53:56 Checking ...
+Usage : java -jar ... [-a] [-u]
+-a : Auto assign all registered ticket in the pool
+-u : Update assignee name and que group in the pool
+-f <case_id> <id of assignee> : Assign the case to the assignee force
+-s <case_id> <current id of assignee> <new id of assignee> : Swap assignee of the case
+-s <case_id> : remove case from pool0
+
+Next assginee            : id = 8, name = Eiichi Sugiyama, laps = 0, point = 18, high_pri = 1
+Next assginee (high_pri) : id = 8, name = Eiichi Sugiyama, laps = 0, point = 18, high_pri = 1
+# of unassigned tickets = 1,+*+*+,
+2017/09/14 16:53:39,+*+*+,Test_PoolMonitor.sh -r 2352328,+*+*+,2017/09/14 16:53:38 Checking ...,+*+*+,
+2017/09/14 16:52:53,+*+*+,Test_PTO_add.sh 2 0 0,+*+*+,,+*+*+,
+2017/09/14 16:52:53,+*+*+,Test_PTO_add.sh 2 0 0,+*+*+,,+*+*+,
+2017/09/14 16:52:52,+*+*+,Test_PTO_add.sh 2 0 0,+*+*+,,+*+*+,
+2017/09/14 16:52:46,+*+*+,Test_PTO_add.sh 2 0 1,+*+*+,,+*+*+,
+2017/09/14 16:52:46,+*+*+,Test_PTO_add.sh 2 0 1,+*+*+,,+*+*+,
+2017/09/14 16:52:24,+*+*+,Test_PoolMonitor.sh,+*+*+,2017/09/14 16:52:23 Checking ...
+Usage : java -jar ... [-a] [-u]
+-a : Auto assign all registered ticket in the pool
+-u : Update assignee name and que group in the pool
+-f <case_id> <id of assignee> : Assign the case to the assignee force
+-s <case_id> <current id of assignee> <new id of assignee> : Swap assignee of the case
+-s <case_id> : remove case from pool0
+
+Next assginee            : id = 8, name = Eiichi Sugiyama, laps = 0, point = 18, high_pri = 1
+Next assginee (high_pri) : id = 8, name = Eiichi Sugiyama, laps = 0, point = 18, high_pri = 1
+# of unassigned tickets = 0,+*+*+,
+2017/09/14 16:52:18,+*+*+,Test_PTO_add.sh 1 1 1,+*+*+,,+*+*+,

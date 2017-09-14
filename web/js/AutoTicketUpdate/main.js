@@ -1,3 +1,13 @@
+// Case Status ページ更新
+
+$(function () {
+  $('#tab1_a').on('click', function (event) {
+    $('.all_loading').removeClass('hide');
+    location.reload();
+  });
+});
+
+
 // Next Assign Check
 
 $(function () {
@@ -258,7 +268,6 @@ $(function () {
 $(function () {
   $('#tab3_a').on('click', function (event) {
 
-    $('.all_loading').removeClass('hide');
     $('.table_log tbody tr').remove('');
 
     $.ajax({
@@ -268,12 +277,12 @@ $(function () {
 
         var newTbody;
         $.each(data, function(i, value) {
+          value[2] = value[2].replace(/\r?\n/g, "<br>");
           newTbody = newTbody + '<tr><td>' + value[0] + '</td><td>' + value[1] + '</td><td>' + value[2] + '</td></tr>';
         });
         $('.table_log tbody').html(newTbody);
       },
       complete: function () {
-        $('.all_loading').addClass('hide');
       }
     });
 
@@ -346,6 +355,21 @@ $(function () {
       }]
   });
 });
+
+/**
+ * home
+ * ajax graph updater - Auto
+*/
+
+$(function () {
+  $('#refresh_count_start').on('click', function () {
+
+    // start ボタンを変更
+    $('#refresh_count_start').text('Runnig...').addClass('button_running').addClass('pointer-events_none');
+    _refreshCountDown();
+  });
+});
+
 
 
 
