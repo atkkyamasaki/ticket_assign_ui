@@ -195,7 +195,7 @@ $(function () {
 
     $('.assignee_status_update').on('click', function (event) {
 
-      $(this).parents('td').children('.table_tac_name').fadeOut('200');
+      $(this).parents('td').css('opacity', '0');
       $('.assignee_status').addClass('hide');
       
       var userId = $(this).parent().parent().parent().prev().text();
@@ -242,13 +242,41 @@ $(function () {
             },
             complete: function () {
               var tdNameElement = '#tac_pto_icon_' + userId;
-              $(tdNameElement).parents('td').children('.table_tac_name').fadeIn('200');
+              $(tdNameElement).parents('td').css('opacity', '');
             }
           });
 
         }
       });
     });
+  });
+});
+
+
+// Log Update
+
+$(function () {
+  $('#tab3_a').on('click', function (event) {
+
+    $('.all_loading').removeClass('hide');
+    $('.table_log tbody tr').remove('');
+
+    $.ajax({
+      type: 'get',
+      url: '/auto_ticket/api/log',
+      success: function (data, status, xhr) {
+
+        var newTbody;
+        $.each(data, function(i, value) {
+          newTbody = newTbody + '<tr><td>' + value[0] + '</td><td>' + value[1] + '</td><td>' + value[2] + '</td></tr>';
+        });
+        $('.table_log tbody').html(newTbody);
+      },
+      complete: function () {
+        $('.all_loading').addClass('hide');
+      }
+    });
+
   });
 });
 

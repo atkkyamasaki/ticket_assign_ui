@@ -35,19 +35,9 @@ class AutoTicketUpdateController extends Controller
 
         $logFilePath = '../src/AppBundle/Resources/config/AutoTicketUpdate/logs.csv';
 
-        if (!file_exists($logFilePath)) {
-            $logs = [['file no exists', '', '']];
-        } else {
-            $logs = $this->getArrayOutputLog($logFilePath);
-        }
-
-        // error_log('debug = ' . print_r($assignee, true) . "\n", 3,
-        // 'C:\Users\Administrator\Desktop\debug.txt');
-
         return $this->render('AppBundle:AutoTicketUpdate:index.html.twig', [
             'assignee' => $assigneeList,
             'pool0' => $pool0,
-            'logs' => $logs,
         ]);
 
     }

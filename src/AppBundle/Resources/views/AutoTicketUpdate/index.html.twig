@@ -14,7 +14,7 @@
     <ul>
         <li><a href="#tab1" class="current">Case Status</a></li>
         <li><a href="#tab2" class="">TAC Status</a></li>
-        <li><a href="#tab3" class="">Logs</a></li>
+        <li><a href="#tab3" id="tab3_a" class="">Logs</a></li>
     </ul>
     <div id="contents">
         <div id="tab1">
@@ -219,13 +219,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for log in logs %}
                             <tr>
-                                <td>{{ log.0 }}</td>
-                                <td>{{ log.1 }}</td>
-                                <td>{{ log.2 | nl2br }}</td>
                             </tr>
-                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
