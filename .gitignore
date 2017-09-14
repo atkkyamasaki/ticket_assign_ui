@@ -35,3 +35,5 @@
 !web/image/test/.gitkeep
 /web/image/test/0*/*
 !web/image/test/0*/.gitkeep
+/src/AppBundle/Resources/config/AutoTicketUpdate/logs.csv
+/web/image/AutoTicketUpdate/logs.zip
