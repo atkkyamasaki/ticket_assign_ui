@@ -48,7 +48,7 @@ class AutoTicketUpdateController extends Controller
      */
     public function nextAssignAction()
     {
-        $cmd = 'Test_PoolMonitor.sh';
+        $cmd = 'PoolMonitor.sh';
         exec($cmd, $output);
         $this->writeOutputLog($cmd, $output);
 
@@ -77,7 +77,7 @@ class AutoTicketUpdateController extends Controller
      */
     public function autoAssignAction()
     {
-        $cmd = 'Test_PoolMonitor.sh -a';
+        $cmd = 'PoolMonitor.sh -a';
         exec($cmd, $output);
         $this->writeOutputLog($cmd, $output);
 
@@ -93,7 +93,7 @@ class AutoTicketUpdateController extends Controller
      */
     public function caseMoveAction()
     {
-        $cmd = 'Test_CaseMover.sh';
+        $cmd = 'CaseMover.sh';
         exec($cmd, $output);
         $this->writeOutputLog($cmd, $output);
 
@@ -109,7 +109,7 @@ class AutoTicketUpdateController extends Controller
      */
     public function manualAssignCreateAction($caseId, $newUserId)
     {
-        $cmd = 'Test_PoolMonitor.sh -f ' . $caseId . ' ' . $newUserId;
+        $cmd = 'PoolMonitor.sh -f ' . $caseId . ' ' . $newUserId;
         exec($cmd, $output);
         $this->writeOutputLog($cmd, $output);
         
@@ -126,7 +126,7 @@ class AutoTicketUpdateController extends Controller
      */
     public function manualAssignUpdateAction($caseId, $oldUserId, $newUserId)
     {
-        $cmd = 'Test_PoolMonitor.sh -s ' . $caseId . ' ' . $oldUserId . ' ' . $newUserId;
+        $cmd = 'PoolMonitor.sh -s ' . $caseId . ' ' . $oldUserId . ' ' . $newUserId;
         exec($cmd, $output);
         $this->writeOutputLog($cmd, $output);
         
@@ -144,7 +144,7 @@ class AutoTicketUpdateController extends Controller
      */
     public function caseDeleteAction($caseId)
     {
-        $cmd = 'Test_PoolMonitor.sh -r ' . $caseId;
+        $cmd = 'PoolMonitor.sh -r ' . $caseId;
         exec($cmd, $output);
         $this->writeOutputLog($cmd, $output);
 
@@ -194,7 +194,7 @@ class AutoTicketUpdateController extends Controller
         // $user->setDa($da);
         // $em->flush();
 
-        $cmd = 'Test_PTO_add.sh ' . $userId . ' ' . $pto . ' ' . $da;
+        $cmd = 'PTO_add.sh ' . $userId . ' ' . $pto . ' ' . $da;
         exec($cmd, $output);
         $this->writeOutputLog($cmd, $output);
 

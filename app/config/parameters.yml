@@ -2,7 +2,7 @@
 parameters:
     database_host: 10.130.3.185
     database_port: 23306
-    database_name: fc
+    database_name: fc0
     database_user: admin
     database_password: admin
     mailer_transport: smtp

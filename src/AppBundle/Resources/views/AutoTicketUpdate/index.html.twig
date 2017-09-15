@@ -13,7 +13,7 @@
 <div id="tab_display">
     <ul>
         <li><a href="#tab1" id="tab1_a" class="current">Case Status</a></li>
-        <li><a href="#tab2" class="">TAC Status</a></li>
+        <li><a href="#tab2" id="tab2_a" class="">TAC Status</a></li>
         <li><a href="#tab3" id="tab3_a" class="">Logs</a></li>
     </ul>
     <div id="contents">
@@ -187,11 +187,11 @@
                                         </form>
                                     </div>
                                 </td>
-                                <td class="table_tac_laps_{{ i }}">{{ tac.laps }}</td>
-                                <td class="table_tac_point_{{ i }}">{{ tac.point }}</td>
-                                <td class="table_tac_highpri_{{ i }}">{{ tac.highPri }}</td>
-                                <td class="hide">{{ tac.pto }}</td>
-                                <td class="hide">{{ tac.da }}</td>
+                                <td class="table_tac_laps table_tac_laps_{{ i }}">{{ tac.laps }}</td>
+                                <td class="table_tac_point table_tac_point_{{ i }}">{{ tac.point }}</td>
+                                <td class="table_tac_highpri table_tac_highpri_{{ i }}">{{ tac.highPri }}</td>
+                                <td class="table_tac_pto hide">{{ tac.pto }}</td>
+                                <td class="table_tac_da hide">{{ tac.da }}</td>
                             </tr>
                             {% set i = i + 1 %}
                             {% endfor %}

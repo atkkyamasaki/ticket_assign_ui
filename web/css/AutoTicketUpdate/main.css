@@ -25,7 +25,7 @@ body {
 
 /* Tab 表示用 CSS */
 #tab_display {
-    padding: 16px;
+    padding: 0 16px;
 }
 
 #tab_display > ul > li {
@@ -40,7 +40,7 @@ body {
     color: white;
     text-decoration: none;
     display: block;
-    padding: 16px;
+    padding: 8px 16px;
     text-align: center;
     width: 100%;
     background: #0275d8;
@@ -289,7 +289,6 @@ body {
 #table_log th:nth-child(2) {
     width: 200px
 }
-
 
 
 

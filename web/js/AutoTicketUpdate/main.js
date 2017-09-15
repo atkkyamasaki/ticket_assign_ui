@@ -206,6 +206,7 @@ $(function () {
     $('.assignee_status_update').on('click', function (event) {
 
       $(this).parents('td').css('opacity', '0');
+
       $('.assignee_status').addClass('hide');
       
       var userId = $(this).parent().parent().parent().prev().text();
@@ -255,7 +256,6 @@ $(function () {
               $(tdNameElement).parents('td').css('opacity', '');
             }
           });
-
         }
       });
     });
@@ -263,11 +263,49 @@ $(function () {
 });
 
 
+
+
+// TAC Status ページ更新
+
+$(function () {
+  $('#tab2_a').on('click', function (event) {
+    $('.all_loading').removeClass('hide');
+
+    $.ajax({
+      type: 'get',
+      url: '/auto_ticket/api/assignee',
+      success: function (data, status, xhr) {
+        var tacElement = '#table_person tr';
+
+        $.each(data, function(i, value) {
+          $(tacElement).eq(i+1).children('.table_tac_id').text(value.id);
+          $(tacElement).eq(i+1).children('.table_tac_name').text(value.name);
+          $(tacElement).eq(i+1).children('.table_tac_laps').text(value.laps);
+          $(tacElement).eq(i+1).children('.table_tac_point').text(value.point);
+          $(tacElement).eq(i+1).children('.table_tac_highpri').text(value.highPri);
+          $(tacElement).eq(i+1).children('.table_tac_pto').text(value.pto);
+          $(tacElement).eq(i+1).children('.table_tac_da').text(value.da);
+        });
+
+      },
+      complete: function () {
+        _updateTacSummaryChart();
+        $('.all_loading').addClass('hide');
+      }
+    });
+  });
+});
+
+
+
+
+
+
 // Log Update
 
 $(function () {
   $('#tab3_a').on('click', function (event) {
-
+    $('.all_loading').removeClass('hide');
     $('.table_log tbody tr').remove('');
 
     $.ajax({
@@ -283,6 +321,7 @@ $(function () {
         $('.table_log tbody').html(newTbody);
       },
       complete: function () {
+        $('.all_loading').addClass('hide');
       }
     });
 
@@ -313,7 +352,7 @@ $(function () {
 // 参考URL
 // http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/column-negative/
 
-$(function () {
+function _updateTacSummaryChart () {
   var allTacName = [];
   var allTacLaps = [];
   var allTacPoint = [];
@@ -327,7 +366,7 @@ $(function () {
     allTacHighPri.push(parseInt($('.table_tac_highpri_' + i).text()));
   }
 
-  Highcharts.chart('highchart_summary_tac', {
+  new Highcharts.chart('highchart_summary_tac', {
       chart: {
           type: 'column'
       },
@@ -354,25 +393,7 @@ $(function () {
           data: allTacLaps
       }]
   });
-});
-
-/**
- * home
- * ajax graph updater - Auto
-*/
-
-$(function () {
-  $('#refresh_count_start').on('click', function () {
-
-    // start ボタンを変更
-    $('#refresh_count_start').text('Runnig...').addClass('button_running').addClass('pointer-events_none');
-    _refreshCountDown();
-  });
-});
-
-
-
-
+}
 
 // タブ表示
 // 参考URL
