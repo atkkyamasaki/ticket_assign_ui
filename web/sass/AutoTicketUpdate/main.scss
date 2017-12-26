@@ -135,7 +135,7 @@ body {
     background-color: #d9534f;
     color: white;
     padding: 6px;
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 0.8em;
     box-shadow: 2px 2px rgba(0,0,0,0.4);
 }
@@ -150,9 +150,8 @@ body {
     background-color: #0275d8;
     color: white;
     padding: 6px;
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 0.8em;
-    box-shadow: 2px 2px rgba(0,0,0,0.4);
 }
 
 .change_assign_icon:hover,
@@ -163,7 +162,7 @@ body {
 
 .manual_assign_create,
 .manual_assign_update {
-    border-radius: 6px;   
+    border-radius: 4px;   
 }
 
 .attend_icon_green {
@@ -228,7 +227,7 @@ body {
 .assignee_status {
     position: absolute;
     border: 1px solid;
-    border-radius: 5px;
+    border-radius: 4px;
     padding: 10px;
     background-color: white;
 }
@@ -243,16 +242,15 @@ body {
 
 .assignee_pulldown_box {
     width: 150px;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
 .assignee_status_update {
     background-color: #0275d8;
     color: white;
     padding: 6px;
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 0.8em;
-    box-shadow: 2px 2px rgba(0,0,0,0.4);
 }
 
 .assignee_status_update:hover {

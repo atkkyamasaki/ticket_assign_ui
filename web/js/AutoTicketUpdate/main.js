@@ -3,7 +3,7 @@
 $(function () {
   $('#tab1_a').on('click', function (event) {
     $('.all_loading').removeClass('hide');
-    location.reload();
+    location.reload(true);
   });
 });
 
