@@ -11,8 +11,8 @@ Encoding.default_external = "utf-8"
 # アウトプットスタイル（デフォルト：expanded）
 # output_style = :expanded   #一般的なCSS記述スタイル
 # output_style = :nested     #Sassなどのネストを継承したスタイル
-# output_style = :compact      #1つのCSS設定が１行になるスタイル
-output_style = :compressed #コメント完全削除+圧縮するスタイル
+output_style = :compact      #1つのCSS設定が１行になるスタイル
+# output_style = :compressed #コメント完全削除+圧縮するスタイル
 
 
 # Compass拡張関数で使うURLを絶対パスか相対パスかで指定（デフォルト：false[絶対パス]）

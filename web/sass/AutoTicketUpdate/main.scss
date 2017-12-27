@@ -11,21 +11,17 @@ body {
     margin: 8px 8px 0 8px;   
 }
 
-.container_title {
-    h1 {
-        font-size: 1.5em;
-        background-color: #0275d8;
-        color: white;
-        padding: 12px 24px;
-        width: 350px;
-        
-        i {
-        padding: 0 12px 0 0;
-        }
-       
-    }
+.container_title > h1 {
+    font-size: 1.5em;
+    background-color: #0275d8;
+    color: white;
+    padding: 12px 24px;
+    width: 350px;
 }
 
+.container_title > h1 > i {
+    padding: 0 12px 0 0;
+}
 
 /* Tab 表示用 CSS */
 #tab_display {
@@ -52,8 +48,8 @@ body {
     border-bottom: none;
 }
 
-#tab_display > ul > li > a:hover{
-    opacity: 0.5
+#tab_display > ul > li > a:hover {
+    opacity: 0.5;
 }
  
 #tab_display > ul > li > a.current {
@@ -65,10 +61,6 @@ body {
     clear:both;
 }
  
-#tab_display #contents > div {
-    /*border: 1px dashed #0275d8;*/
-}
-
 
 
 /* Tab1 用 */
